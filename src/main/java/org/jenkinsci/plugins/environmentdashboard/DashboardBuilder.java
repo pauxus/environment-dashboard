@@ -51,11 +51,7 @@ public class DashboardBuilder extends BuildWrapper {
         this.buildNumber = buildNumber;
         this.buildJob = buildJob;
         this.packageName = packageName;
-        if (addColumns){
-            this.addColumns = addColumns;
-        }else {
-            this.addColumns=false;
-        }
+        this.addColumns = addColumns;
         //this.data = Collections.emptyList();
         if(this.addColumns){
             for (ListItem i: data){
@@ -128,7 +124,19 @@ public class DashboardBuilder extends BuildWrapper {
                 String passedBuildJob = build.getEnvironment(listener).expand(buildJob);
                 String passedPackageName = build.getEnvironment(listener).expand(packageName);
                 String doDeploy = build.getEnvironment(listener).expand("$UPDATE_ENV_DASH");
+
                 List<ListItem> passedColumnData = Collections.emptyList();
+                if (addColumns){
+                    for (ListItem item : data){
+                        passedColumnData.add(
+                                new ListItem(
+                                        build.getEnvironment(listener).expand(item.columnName),
+                                        build.getEnvironment(listener).expand(item.contents)
+                                )
+                        );
+                    }
+                }
+
                 String returnComment = null;
                 
                 if (passedPackageName== null){
