@@ -125,7 +125,7 @@ public class DashboardBuilder extends BuildWrapper {
                 String passedPackageName = build.getEnvironment(listener).expand(packageName);
                 String doDeploy = build.getEnvironment(listener).expand("$UPDATE_ENV_DASH");
 
-                List<ListItem> passedColumnData = Collections.emptyList();
+                List<ListItem> passedColumnData = new ArrayList<ListItem>();
                 if (addColumns){
                     for (ListItem item : data){
                         passedColumnData.add(
